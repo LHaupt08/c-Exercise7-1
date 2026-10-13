@@ -12,6 +12,12 @@ namespace InvoiceTotal
             try
             {
                 decimal subtotal = Decimal.Parse(txtSubtotal.Text);
+
+                if (subtotal <= 0 || subtotal >= 10000)
+                {
+                    throw new Exception("Please enter a value greater than zero and less than 10,000.");
+                }
+
                 decimal discountPct = .25m;
                 decimal discountAmt = Math.Round(subtotal * discountPct, 2);
                 decimal invoiceTotal = Math.Round(subtotal - discountAmt, 2);
@@ -20,10 +26,10 @@ namespace InvoiceTotal
                 txtDiscountAmt.Text = discountAmt.ToString("c");
                 txtTotal.Text = invoiceTotal.ToString("c");
             }
-            catch
+            catch(Exception ex)
             {
 
-                MessageBox.Show("Please enter a valid number for the subtotal field.", "Entry Error");
+                MessageBox.Show(ex.Message, "Entry Error");
 
             }
 
